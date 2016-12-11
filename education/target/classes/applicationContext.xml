@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:c="http://www.springframework.org/schema/c"
+	xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-4.2.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.2.xsd
+		http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
+		
+		<context:component-scan base-package="com.future"></context:component-scan>
+		
+<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+destroy-method="close" p:driverClass="com.mysql.jdbc.Driver" 
+p:jdbcUrl="jdbc:mysql://127.0.0.1/education"
+p:user="root"
+p:password="null"
+p:maxPoolSize="40"
+p:minPoolSize="2"
+p:initialPoolSize="2"
+p:maxIdleTime="30"
+></bean>
+<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"
+p:dataSource-ref="dataSource">
+<property name="annotatedClasses">
+<list>
+ <!--实体  -->
+<value>com.future.domain.Teacher</value>
+
+</list>
+
+</property>
+<property name="hibernateProperties">
+<props>
+<prop key="hibernate.dialect">
+org.hibernate.dialect.MySQL5InnoDBDialect
+</prop>
+<prop key="hibernate.hbm2ddl.auto">update</prop>
+<prop key="hibernate.show.sql">true</prop>
+<prop key="hibernate.format_sql">true</prop>
+</props>
+
+</property>
+
+</bean>
+<bean id="loginAction" class="com.future.actions.LoginAction"></bean>
+<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager" 
+p:sessionFactory-ref="sessionFactory"></bean>
+<tx:advice id="txAdvice" transaction-manager="transactionManager" >
+<tx:attributes>
+<tx:method name="get*" read-only="true"/>
+
+</tx:attributes>
+
+</tx:advice>
+<aop:config>
+<aop:pointcut expression="bean(loginService )" id="myPointCut"/>
+<aop:advisor advice-ref="txAdvice" pointcut-ref="myPointCut"/>
+
+
+</aop:config>
+
+
+
+
+</beans>
