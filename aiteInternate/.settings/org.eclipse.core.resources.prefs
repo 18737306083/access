@@ -1,0 +1,11 @@
+eclipse.preferences.version=1
+encoding//src/main/webapp/WEB-INF/jsp/admin/admin.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/admin/bottom.jsp=UTF-8
+encoding//src/main/webapp/WEB-INF/jsp/admin/top.jsp=UTF-8
+encoding//src/main/webapp/admin_left.jsp=UTF-8
+encoding//src/main/webapp/index.jsp=UTF-8
+encoding//src/main/webapp/jsp/admin/change.jsp=UTF-8
+encoding//src/main/webapp/jsp/admin/findstudent.jsp=UTF-8
+encoding//src/main/webapp/jsp/admin/findteacher.jsp=UTF-8
+encoding//src/main/webapp/jsp/admin/manastudent.jsp=UTF-8
+encoding//src/main/webapp/jsp/person.jsp=UTF-8

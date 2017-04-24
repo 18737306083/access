@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+    <constant name="struts.ui.theme" value="simple"></constant>
+    <constant name="struts.devMode" value="true"></constant>
+    <constant name="struts.configuration.xml.reload" value="true"></constant>
+    <!-- 禁止缓存 -->
+    <constant name="struts.serve.static.browserCache" value="false" /> 
+	<constant name="struts.action.extension" value="action,do,,"/>
+    <!--  <constant name="struts.multipart.saveDir" value="/img"></constant> -->
+     <!-- 由spring 管理action的创建  -->
+    <constant name="struts.objectFactory" value="spring" />
+    
+    <package name="default" namespace="/" extends="json-default">
+    	<!-- 定义新的拦截器栈, 配置 prepare 拦截器栈的 alwaysInvokePrepare 参数值为 false -->
+		<!-- <interceptors>
+    		<interceptor name="checkPrivilege" class="com.future.utils.CheckLoginInterceptor"></interceptor>
+			<interceptor-stack name="sshStack">
+				<interceptor-ref name="checkPrivilege"></interceptor-ref>
+				取消prepare方法的执行 
+				<interceptor-ref name="paramsPrepareParamsStack">
+					<param name="prepare.alwaysInvokePrepare">false</param>
+				</interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors> -->
+		<!-- 使用新的拦截器栈 -->
+		<!-- <default-interceptor-ref name="sshStack"></default-interceptor-ref> -->
+		
+		<!-- 管理员 -->
+		
+		<action name="adminManager_*" method="{1}" class="adminController">
+		<!-- <result type="stream"></result> -->
+		<!-- <interceptor-ref name="fileUpload">
+		<param name="allowedType">image/png,image/gif,/image/jpeg</param>
+		<param name="maximumSize">30000</param>
+		</interceptor-ref>
+		
+		<interceptor-ref name="defaultStack"></interceptor-ref> -->
+		<result>/index.jsp</result>
+		</action>
+		
+		
+	   <action name="admin_*" class="loginAction" method="{1}">
+	   
+	   
+	 
+	 <result name="info" type="json"></result>
+	   <result name="firstLogin" type="redirect">admin_firstLogin</result>
+	 <result name="login" type="redirect">/index.jsp</result>
+	 <result>/WEB-INF/jsp/admin/admin.jsp</result>
+	 </action>  
+	 
+   <action name="picaode"  class="picCode">
+   <!-- <result>/index.jsp</result> -->
+    <result type="stream"> 
+       
+        <param name="contentType">image/jpeg</param>     
+            <param name="inputName">inputStream</param>   
+    </result>  
+     
+   </action>    
+    	
+       <action name="ad_*" class="adminAction" method="{1}">
+       <result type="json"></result>
+       
+      <result name="finbystudent">/jsp/finbystudent.jsp</result>
+      <result name="changepassword">/jsp/admin/change.jsp</result>
+      
+      
+       </action> 
+    
+    
+    <action name="adminteacher_*" class="adminTeacherManageAction" method="{1}">
+    <result name="addteacherview">/jsp/admin/addteacher.jsp</result>
+  <!--   <result name="lookteacherinfo">/jsp/admin/managerteacher.jsp</result> -->
+     <result type="json" name="lookteacherinfo"> 
+     <param name="noCache">true</param>
+   <!--  <param name="contentType">text/html</param>    -->
+    <param name="root">y</param>     
+   
+     </result>  
+    <result type="json" name="findcount"></result>
+    <result type="json" name="deleteteacher"></result>
+    </action>   
+      
+          
+          
+    
+    
+    <action name="adminClass_*"  class="adminClassmanager" method="{1}">
+    <result name="add">/aiteInternate/jsp/admin/addClasses.jsp</result>
+    <result name="classbystudent">/aiteInternate/jsp/admin/classestudent.jsp</result>
+    <result name="findbyclass">/aiteInternate/jsp/admin/manaclasss.jsp</result>
+    </action>
+    
+ <!--    教学管理 -->
+ <action name="adminarrange_*" class="adminByArrangeAction" method="{1}">
+ <result ></result>
+ 
+ </action>
+    	
+    </package>
+</struts>
